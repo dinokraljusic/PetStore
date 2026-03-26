@@ -1,1 +1,34 @@
 # PetStore
+
+Small demo project in .NET 10 representing a Pet Toy store.
+
+The app uses MS SQL connector (thogh the same logic could be used for any provider e.g. SqlLite or MySQL).
+On the first start, the DB is seeded with some initial data.
+
+## Using the app
+
+Pull this branch and do `Add-Migration` and `Update-Database`.
+
+After the app starts, the Home page contains tle list of toys.
+After you select toy(s) on the Home page, click `Buy`, and you'll be taken to the Create Purchase page where you'll be prompted to enter info as well as quantities.
+
+## Admin
+
+To login as admin, click on the `Login` button on the top right.
+The seeded creds are `admin@petstore.com` and `P@ssw0rd!`.
+Once the login has succeded, you'll be able to access the Admin page from the Home page.
+On the Admin page you can view purchases, toys, categories, etc.
+
+## Notes
+
+The project does not have any pictures for toys. A few approaches can be chosen for that depending on the scale:
+ * Directly to the DB as byte[]: prop byte[] ImageData{get;set;} 
+ * string link: public string? ImagePath {get;set;} like "/uploads/pproducts/toys/image12345.jpg" and keep the images locally or point to a web uri
+ * Use object storage like Azure Blob or Amazon S3.
+ 
+For a bigger project, we would:
+ * have a separate table for price containing date applied and price history which would work on a DB trigger,
+ * have deleted boolean and datetimeDeleted column, so as not to delete data on DELETE action, rather change status,
+ * repository pattern could be used to make the controllers cleaner and separate concerns,
+ * disable Buy button when nothing selected,
+ * use Clean architecture / onion so that it is more separated and testable: presentation calling service which uses domain entities...
