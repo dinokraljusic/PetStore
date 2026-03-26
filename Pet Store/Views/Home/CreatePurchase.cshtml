@@ -1,0 +1,58 @@
+@model Pet_Store.ViewModels.PurchaseCreateViewModel
+@Html.ValidationSummary(true, "", new { @class = "text-danger" });
+
+@{
+    ViewData["Title"] = "Create Purchase";
+}
+
+<h1>Create Purchase</h1>
+
+<form asp-action="CreatePurchase" method="post">
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Address" class="form-label"></label>
+        <input asp-for="Address" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="CreditCardNumber" class="form-label"></label>
+        <input asp-for="CreditCardNumber" class="form-control" />
+        <span asp-validation-for="CreditCardNumber" class="text-danger"></span>
+    </div>
+
+    <h4>Items</h4>
+    <table class="table">
+        <thead>
+            <tr><th>Item</th><th>Price</th><th>Available</th><th>Quantity</th></tr>
+        </thead>
+        <tbody>
+        @for (int i = 0; i < Model.Items.Count; i++)
+        {
+            <tr>
+                <td>@Model.Items[i].Name
+                    <input type="hidden" name="Items[@i].ToyId" value="@Model.Items[i].ToyId" />
+                </td>
+                <td>@Model.Items[i].Price.ToString("C")</td>
+                <td>@(Model.Items[i].QuantityAvailable == 0 ? "Out" : (Model.Items[i].QuantityAvailable < 0 ? "Unlimited" : Model.Items[i].QuantityAvailable.ToString()))</td>
+                <td>
+                    <input type="number" name="Items[@i].Quantity" value="@Model.Items[i].Quantity" class="form-control" min="1" />
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <button class="btn btn-primary" type="submit">Place Order</button>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

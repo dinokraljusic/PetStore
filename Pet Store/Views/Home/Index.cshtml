@@ -1,0 +1,99 @@
+﻿@model Pet_Store.ViewModels.HomeIndexViewModel
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+@{
+    if (ViewBag.SuccessMessage != null)
+    {
+        @Html.Raw("<div class=\"alert alert-success\">Purchase completed successfully!</div>");
+    }
+}
+
+<h1>Available Toys</h1>
+
+<form method="get" class="mb-3">
+    <div class="row g-2">
+        <div class="col-auto">
+            <select name="categoryId" class="form-select">
+                <option value="">All categories</option>
+                <option value="-1">(No category)</option>
+                @foreach (var c in Model.Categories)
+                {
+                    <option value="@c.Id">@c.Name</option>
+                }
+            </select>
+        </div>
+        <div class="col-auto">
+            <select name="manufacturerId" class="form-select">
+                <option value="">All manufacturers</option>
+                <option value="-1">(No manufacturer)</option>
+                @foreach (var m in Model.Manufacturers)
+                {
+                    <option value="@m.Id">@m.Name</option>
+                }
+            </select>
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-primary">Filter</button>
+        </div>
+    </div>
+</form>
+
+<form id="startPurchaseForm" method="post" asp-controller="Home" asp-action="StartPurchase">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        @foreach (var toy in Model.Toys)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@toy.Name</h5>
+                        <p class="card-text">@toy.Description</p>
+                        <p class="card-text">Available: @toy.QuantityAvailable</p>
+                        <p class="card-text"><strong>@toy.Price.ToString("C")</strong></p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="selectedToyIds" value="@toy.Id" />
+                            <label class="form-check-label">Select</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <hr />
+    <div class="mb-3">
+        <button type="button" id="startPurchaseBtn" class="btn btn-success">Buy</button>
+    </div>
+
+</form>
+
+@section Scripts {
+    <script>
+        document.getElementById('startPurchaseBtn').addEventListener('click', function () {
+            var form = document.getElementById('startPurchaseForm');
+            // remove previously added hidden inputs
+            Array.from(form.querySelectorAll('input[name="selectedToyIds"]')).forEach(function (i) {
+                if (i.type === 'hidden') i.remove();
+            });
+
+            // find checked checkboxes in the form
+            var checks = form.querySelectorAll('input[type="checkbox"][name="selectedToyIds"]:checked');
+            if (!checks || checks.length === 0) {
+                alert('Select at least one toy.');
+                return;
+            }
+
+            checks.forEach(function (cb) {
+                var h = document.createElement('input');
+                h.type = 'hidden';
+                h.name = 'selectedToyIds';
+                h.value = cb.value;
+                form.appendChild(h);
+            });
+
+            form.submit();
+        });
+    </script>
+}

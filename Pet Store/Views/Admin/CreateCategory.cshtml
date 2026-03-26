@@ -1,0 +1,22 @@
+@model Pet_Store.Models.ToyCategory
+
+@{
+    var isEdit = Model?.Id > 0;
+    ViewData["Title"] = isEdit ? "Edit Category" : "Create Category";
+}
+
+<h1>@(ViewData["Title"])</h1>
+
+<form asp-action="CreateCategory" method="post">
+    @if (isEdit)
+    {
+        <input type="hidden" asp-for="Id" />
+    }
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">@(isEdit ? "Save" : "Create")</button>
+</form>

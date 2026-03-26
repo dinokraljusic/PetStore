@@ -1,0 +1,129 @@
+@model Pet_Store.ViewModels.AdminDashboardViewModel
+
+@{
+    ViewData["Title"] = "Admin";
+}
+
+<h1>Admin</h1>
+
+<ul class="nav nav-tabs" id="adminTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="purchases-tab" data-bs-toggle="tab" data-bs-target="#purchases" type="button" role="tab">Purchases</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="manufacturers-tab" data-bs-toggle="tab" data-bs-target="#manufacturers" type="button" role="tab">Manufacturers</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="categories-tab" data-bs-toggle="tab" data-bs-target="#categories" type="button" role="tab">Categories</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="toys-tab" data-bs-toggle="tab" data-bs-target="#toys" type="button" role="tab">Toys</button>
+    </li>
+</ul>
+
+<div class="tab-content mt-3">
+    <div class="tab-pane fade show active" id="purchases" role="tabpanel" aria-labelledby="purchases-tab">
+        <h3>Purchases</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>User</th>
+                    <th>Date</th>
+                    <th>Address</th>
+                    <th>Items</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var p in Model.Purchases)
+            {
+                <tr>
+                    <td>@p.Id</td>
+                    <td>@(p.User?.FullName ?? p.User?.Email ?? "(unknown)")</td>
+                    <td>@p.PurchaseDate.ToString("g")</td>
+                    <td>@(string.IsNullOrWhiteSpace(p.Address) ? "(none)" : p.Address)</td>
+                    <td>@(string.IsNullOrWhiteSpace(p.CreditCardNumber) ? "(none)" : p.CreditCardNumber) </td>
+                    <td>
+                        @if (p.PurchaseDetails != null && p.PurchaseDetails.Any())
+                        {
+                            <ul class="mb-0">
+                            @foreach (var d in p.PurchaseDetails)
+                            {
+                                <li>@(d.Toy?.Name ?? "(deleted)") x @d.Quantity</li>
+                            }
+                            </ul>
+                        }
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="tab-pane fade" id="manufacturers" role="tabpanel" aria-labelledby="manufacturers-tab">
+        <div class="d-flex justify-content-between align-items-center">
+            <h3>Manufacturers</h3>
+            <a class="btn btn-primary" asp-action="CreateManufacturer">Create</a>
+        </div>
+        <table class="table table-striped mt-2">
+            <thead>
+                <tr><th>Id</th><th>Name</th><th>Country</th><th></th></tr>
+            </thead>
+            <tbody>
+                @foreach(var m in Model.Manufacturers) {
+                    <tr>
+                        <td>@m.Id</td>
+                        <td>@m.Name</td>
+                        <td>@m.Country</td>
+                        <td>
+                            <a class="btn btn-sm btn-secondary" asp-action="CreateManufacturer" asp-route-id="@m.Id">Edit</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="tab-pane fade" id="categories" role="tabpanel" aria-labelledby="categories-tab">
+        <div class="d-flex justify-content-between align-items-center">
+            <h3>Categories</h3>
+            <a class="btn btn-primary" asp-action="CreateCategory">Create</a>
+        </div>
+        <table class="table table-striped mt-2">
+            <thead><tr><th>Id</th><th>Name</th><th></th></tr></thead>
+            <tbody>
+                @foreach(var c in Model.Categories) {
+                    <tr>
+                        <td>@c.Id</td>
+                        <td>@c.Name</td>
+                        <td><a class="btn btn-sm btn-secondary" asp-action="CreateCategory" asp-route-id="@c.Id">Edit</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="tab-pane fade" id="toys" role="tabpanel" aria-labelledby="toys-tab">
+        <div class="d-flex justify-content-between align-items-center">
+            <h3>Toys</h3>
+            <a class="btn btn-primary" asp-action="CreateToy">Create</a>
+        </div>
+        <table class="table table-striped mt-2">
+            <thead><tr><th>Id</th><th>Name</th><th>Category</th><th>Manufacturer</th><th>Price</th><th></th></tr></thead>
+            <tbody>
+                @foreach(var t in Model.Toys) {
+                    <tr>
+                        <td>@t.Id</td>
+                        <td>@t.Name</td>
+                        <td>@t.Category?.Name</td>
+                        <td>@t.Manufacturer?.Name</td>
+                        <td>@t.QuantityAvailable</td>
+                        <td>@t.Price.ToString("C")</td>
+                        <td><a class="btn btn-sm btn-secondary" asp-action="CreateToy" asp-route-id="@t.Id">Edit</a></td>
+                        <td><a class="btn btn-sm btn-danger" asp-action="DeleteToy" asp-route-id="@t.Id">Delete</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
