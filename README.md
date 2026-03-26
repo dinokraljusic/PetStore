@@ -29,6 +29,6 @@ The project does not have any pictures for toys. A few approaches can be chosen 
 For a bigger project, we would:
  * have a separate table for price containing date applied and price history which would work on a DB trigger,
  * have deleted boolean and datetimeDeleted column, so as not to delete data on DELETE action, rather change status,
- * repository pattern could be used to make the controllers cleaner and separate concerns,
+ * repository pattern could be used to make the controllers cleaner (since here the controllers handle all of business logic) and separate concerns,
  * disable Buy button when nothing selected,
  * use Clean architecture / onion so that it is more separated and testable: presentation calling service which uses domain entities...
