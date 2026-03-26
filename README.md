@@ -32,6 +32,8 @@ The project does not have any pictures for toys. A few approaches can be chosen 
  * Directly to the DB as byte[]: prop byte[] ImageData{get;set;} 
  * string link: public string? ImagePath {get;set;} like "/uploads/pproducts/toys/image12345.jpg" and keep the images locally or point to a web uri
  * Use object storage like Azure Blob or Amazon S3.
+ * Users are created when a purches is made (email check if existing) based on the problem descriptio reading. Of course, users can be made on the same flow as Admin (modify Login to create) and create user non-admin type.
+ * Admin privileges are handled by Identity.EntityFramework.
  
 For a bigger project, we would:
  * have a separate table for price containing date applied and price history which would work on a DB trigger,
