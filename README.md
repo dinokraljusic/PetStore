@@ -10,7 +10,7 @@ On the first start, the DB is seeded with some initial data.
 Pull this branch and do `Add-Migration` and `Update-Database`.
 
 After the app starts, the Home page contains tle list of toys.
-Build debug or create release exe.
+Build debug or Publish a release build to a local folder.
 After you select toy(s) on the Home page, click `Buy`, and you'll be taken to the Create Purchase page where you'll be prompted to enter info as well as quantities.
 
 ## Admin
