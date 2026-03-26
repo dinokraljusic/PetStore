@@ -18,7 +18,9 @@ After you select toy(s) on the Home page, click `Buy`, and you'll be taken to th
 
 <img width="440" height="308" alt="image" src="https://github.com/user-attachments/assets/d42bea86-4360-4c04-b4e8-9098ddf4a50d" />
 
-_Pulish profile._
+_Pulish profile example._
+
+_Note: you can also publish with other args such as framework-dependent, specific target runtime (e.g. x64) and check conn sting to be used at runtime._
 
 ## Admin
 
