@@ -7,7 +7,7 @@ On the first start, the DB is seeded with some initial data.
 
 ## Using the app
 
-Pull this branch and do `Add-Migration` and `Update-Database`.
+Pull this branch and do `Add-Migration` and `Update-Database`. Which will create `PetStoreDb` locally.
 
 After the app starts, the Home page contains tle list of toys.
 Build debug or Publish a release build to a local folder.
