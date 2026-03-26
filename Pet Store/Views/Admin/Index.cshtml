@@ -110,7 +110,14 @@
             <a class="btn btn-primary" asp-action="CreateToy">Create</a>
         </div>
         <table class="table table-striped mt-2">
-            <thead><tr><th>Id</th><th>Name</th><th>Category</th><th>Manufacturer</th><th>Price</th><th></th></tr></thead>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Manufacturer</th>
+                    <th>Available</th>
+                    <th>Price</th><th></th></tr></thead>
             <tbody>
                 @foreach(var t in Model.Toys) {
                     <tr>
