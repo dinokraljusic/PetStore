@@ -13,6 +13,12 @@ After the app starts, the Home page contains tle list of toys.
 Build debug or Publish a release build to a local folder.
 After you select toy(s) on the Home page, click `Buy`, and you'll be taken to the Create Purchase page where you'll be prompted to enter info as well as quantities.
 
+```Server=localhost;Database=PetStoreDb;Trusted_Connection=True;TrustServerCertificate=True;```
+
+<img width="440" height="308" alt="image" src="https://github.com/user-attachments/assets/d42bea86-4360-4c04-b4e8-9098ddf4a50d" />
+
+_Pulish profile._
+
 ## Admin
 
 To login as admin, click on the `Login` button on the top right.
